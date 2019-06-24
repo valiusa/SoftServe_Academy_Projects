@@ -1,0 +1,7 @@
+E:\Viusal_CS_Projects\ChessFigureProblem\ChessFigureProblem\bin\Debug\ChessFigureProblem.exe.config
+E:\Viusal_CS_Projects\ChessFigureProblem\ChessFigureProblem\bin\Debug\ChessFigureProblem.exe
+E:\Viusal_CS_Projects\ChessFigureProblem\ChessFigureProblem\bin\Debug\ChessFigureProblem.pdb
+E:\Viusal_CS_Projects\ChessFigureProblem\ChessFigureProblem\obj\Debug\ChessFigureProblem.csprojAssemblyReference.cache
+E:\Viusal_CS_Projects\ChessFigureProblem\ChessFigureProblem\obj\Debug\ChessFigureProblem.csproj.CoreCompileInputs.cache
+E:\Viusal_CS_Projects\ChessFigureProblem\ChessFigureProblem\obj\Debug\ChessFigureProblem.exe
+E:\Viusal_CS_Projects\ChessFigureProblem\ChessFigureProblem\obj\Debug\ChessFigureProblem.pdb
