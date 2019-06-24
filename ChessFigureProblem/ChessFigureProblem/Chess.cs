@@ -18,22 +18,18 @@ namespace ChessFigureProblem
             byte size = byte.Parse(Console.ReadLine());
 
             Map map = new Map(size);
-
-
-            byte posX = (byte)rnd.Next(0, size);
-            byte posY = (byte)rnd.Next(0, size);
+           
             byte countHorses = 0;
 
             while (countHorses < size)
             {
-                if (map.IsFreeSpace(posX, posY, horse.GetLook))
+                p.SetX = (byte)rnd.Next(0, size);
+                p.SetY = (byte)rnd.Next(0, size);
+                if (map.IsFreeSpace(p.GetX, p.GetY, horse.GetLook))
                 {
-                    map.SetOnMap(posX, posY, horse.GetLook);
+                    map.SetOnMap(p.GetX, p.GetY, horse.GetLook);
                     countHorses++;
-                }
-
-                posX = (byte)rnd.Next(0, size);
-                posY = (byte)rnd.Next(0, size);                
+                }             
             }
 
             map.ShowMap(horse.GetLook);
