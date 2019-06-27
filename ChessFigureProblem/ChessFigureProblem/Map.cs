@@ -49,27 +49,27 @@ namespace ChessFigureProblem
         {
             switch (look)
             {
-                case '\u2659':
+                case '\u2659': // Pawn
                     board[posX, posY] = look;
                     SetPawnFightPos(ref posX,ref posY, look);
                     break;
-                case '\u2658':
+                case '\u2658': // Knight
                     board[posX, posY] = look;
                     SetKnightFightPos(posX, posY);
                     break;
-                case '\u2657':
+                case '\u2657': // Bishop
                     board[posX, posY] = look;
                     SetBishopFightPos(posX, posY);
                     break;
-                case '\u2656':
+                case '\u2656': // Rook
                     board[posX, posY] = look;
                     SetRookFightPos(posX, posY);
                     break;
-                case '\u2655':
+                case '\u2655': // Queen
                     board[posX, posY] = look;
                     SetQueenFightPos(posX, posY);
                     break;
-                case '\u2654':
+                case '\u2654': // King
                     board[posX, posY] = look;
                     SetKingFightPos(posX, posY);
                     break;
@@ -83,7 +83,7 @@ namespace ChessFigureProblem
         {
             Random rnd = new Random();
 
-            // If the figure position is greater or equals to half of the size it fight positions are put upwards else they are put downwards
+            // If the figure position is greater or equals to half of the size it fight positions are set upwards else they are put downwards
             if (posX >= size / 2)
             {
                 if (posX - 1 >= 0 && posY - 1 >= 0)

@@ -31,6 +31,7 @@ namespace ChessFigureProblem
         {
             Random rnd = new Random();
 
+            const int maxUnscSize = 80 * 3;
             byte size = map.GetSize;
             byte countFigures = 0;
             byte countUnsuccessful = 0;
@@ -48,10 +49,11 @@ namespace ChessFigureProblem
                 else
                 {
                     countUnsuccessful++;
-                    if (countUnsuccessful == (size * size) * 2)
+                    if (countUnsuccessful == maxUnscSize)
                     {
-                        Console.WriteLine("No Solution Found!");
-                        Console.WriteLine("Try Again.");
+                        Console.WriteLine();
+                        Console.WriteLine(" No Solution Found!");
+                        Console.WriteLine(" Try Again.");
                         break;
                     }
                 }
