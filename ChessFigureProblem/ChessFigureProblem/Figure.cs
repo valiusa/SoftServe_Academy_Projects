@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChessFigureProblem
+﻿namespace ChessFigureProblem
 {
-    interface IFigure
-    {
-        char GetLook { get; }
-        char SetLook { set; }
-    }
-
     class Figure : IFigure
     {
         private char look;

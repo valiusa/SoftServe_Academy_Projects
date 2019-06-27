@@ -1,28 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessFigureProblem
 {
-    interface IMap
-    {
-        byte GetSize { get; }
-
-        void ShowMap(char look);
-        void SetOnMap(byte posX, byte posY, char look);
-
-        void SetPawnFightPos(byte posX, byte posY);
-        void SetKnightFightPos(byte posX, byte posY);
-        void SetBishopFightPos(byte posX, byte posY);
-        void SetRookFightPos(byte posX, byte posY);
-        void SetQueenFightPos(byte posX, byte posY);
-        void SetKingFightPos(byte posX, byte posY);
-
-        bool IsFreeSpace(byte posX, byte posY, char look);
-    }
-
     class Map : IMap
     {
         private readonly byte size;
@@ -68,26 +47,30 @@ namespace ChessFigureProblem
 
         public void SetOnMap(byte posX, byte posY, char look)
         {
-            board[posX, posY] = look;
-
             switch (look)
             {
                 case '\u2659':
-                    SetPawnFightPos(posX, posY);
+                    board[posX, posY] = look;
+                    SetPawnFightPos(ref posX,ref posY, look);
                     break;
                 case '\u2658':
+                    board[posX, posY] = look;
                     SetKnightFightPos(posX, posY);
                     break;
                 case '\u2657':
+                    board[posX, posY] = look;
                     SetBishopFightPos(posX, posY);
                     break;
                 case '\u2656':
+                    board[posX, posY] = look;
                     SetRookFightPos(posX, posY);
                     break;
                 case '\u2655':
+                    board[posX, posY] = look;
                     SetQueenFightPos(posX, posY);
                     break;
                 case '\u2654':
+                    board[posX, posY] = look;
                     SetKingFightPos(posX, posY);
                     break;
                 default:
@@ -96,19 +79,72 @@ namespace ChessFigureProblem
         }
 
         // Figure fighting positions setting methods --------------
-        // TODO: Check why sometime is putting a 'x' on pawn position
-        public void SetPawnFightPos(byte posX, byte posY)
+        public void SetPawnFightPos(ref byte posX,ref byte posY, char look)
         {
-            // Left-Fight-Pos
-            if (posX - 1 >= 0 && posY - 1 >= 0)
-            {
-                board[posX - 1, posY - 1] = fight;
-            }
+            Random rnd = new Random();
 
-            // Right-Fight-Pos
-            if (posX - 1 >= 0 && posY + 1 < size)
+            // If the figure position is greater or equals to half of the size it fight positions are put upwards else they are put downwards
+            if (posX >= size / 2)
             {
-                board[posX - 1, posY + 1] = fight;
+                if (posX - 1 >= 0 && posY - 1 >= 0)
+                {
+                    if (board[posX - 1, posY - 1] != look)
+                    {
+                        board[posX - 1, posY - 1] = fight; // Upper-Left-Fight-Pos
+                    }
+                    else
+                    {
+                        posX = (byte)rnd.Next(0, size);
+                        posY = (byte)rnd.Next(0, size);
+
+                        SetPawnFightPos(ref posX, ref posY, look);
+                    }
+                }
+                if (posX - 1 >= 0 && posY + 1 < size)
+                {
+                    if (board[posX - 1, posY + 1] != look)
+                    {
+                        board[posX - 1, posY + 1] = fight; // Upper-Right-Fight-Pos
+                    }
+                    else
+                    {
+                        posX = (byte)rnd.Next(0, size);
+                        posY = (byte)rnd.Next(0, size);
+
+                        SetPawnFightPos(ref posX, ref posY, look);
+                    }
+                }
+            }
+            else
+            {
+                if (posX + 1 < size && posY - 1 >= 0)
+                {
+                    if (board[posX + 1, posY - 1] != look)
+                    {
+                        board[posX + 1, posY - 1] = fight; // Down-Left-Fight-Pos
+                    }
+                    else
+                    {
+                        posX = (byte)rnd.Next(0, size);
+                        posY = (byte)rnd.Next(0, size);
+
+                        SetPawnFightPos(ref posX, ref posY, look);
+                    }
+                }
+                if (posX + 1 < size && posY + 1 < size)
+                {
+                    if (board[posX + 1, posY + 1] != look)
+                    {
+                        board[posX + 1, posY + 1] = fight; // Down-Right-Fight-Pos
+                    }
+                    else
+                    {
+                        posX = (byte)rnd.Next(0, size);
+                        posY = (byte)rnd.Next(0, size);
+
+                        SetPawnFightPos(ref posX, ref posY, look);
+                    }
+                }
             }
         }
 
@@ -185,7 +221,7 @@ namespace ChessFigureProblem
                 }
             }
         }
-        
+
         public void SetRookFightPos(byte posX, byte posY)
         {
             // Horizontal-Fight-Pos And Vertical-Fight-Pos
@@ -214,7 +250,7 @@ namespace ChessFigureProblem
                 }
             }
         }
-        
+
         public void SetQueenFightPos(byte posX, byte posY)
         {
             // Left-Diagonal-Fight-Pos And Right-Diagonal-Fight-Pos | Horizontal-Fight-Pos And Vertical-Fight-Pos

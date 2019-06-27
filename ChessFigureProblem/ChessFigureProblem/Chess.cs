@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessFigureProblem
 {
@@ -25,19 +22,18 @@ namespace ChessFigureProblem
 
             Map map = new Map(size);
 
-            byte countUnsuccessful = 0;
-
-            StartSetting(map, p, figObj, ref countUnsuccessful);
+            StartSetting(map, p, figObj);
 
             map.ShowMap(figObj.GetLook);
         }
 
-        private static void StartSetting(Map map, Point p, Figure figObj, ref byte countUnsuccessful)
+        private static void StartSetting(Map map, Point p, Figure figObj)
         {
             Random rnd = new Random();
 
             byte size = map.GetSize;
             byte countFigures = 0;
+            byte countUnsuccessful = 0;
 
             while (countFigures < size)
             {

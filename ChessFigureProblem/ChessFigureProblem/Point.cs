@@ -1,20 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChessFigureProblem
+﻿namespace ChessFigureProblem
 {
-    interface IPoint
-    {
-        byte GetX { get; }
-        byte SetX { set; }
-
-        byte GetY { get; }
-        byte SetY { set; }
-    }
-
     class Point : IPoint
     {
         private byte pX;
