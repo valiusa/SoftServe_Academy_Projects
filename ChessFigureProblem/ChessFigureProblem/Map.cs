@@ -25,23 +25,25 @@ namespace ChessFigureProblem
 
         public void ShowMap(char look)
         {
-            for (int i = 0; i < size; i++)
+            if (!IsMapEmpty())
             {
-                for (int j = 0; j < size; j++)
+                for (int i = 0; i < size; i++)
                 {
-                    if (board[i, j] == look)
+                    for (int j = 0; j < size; j++)
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        if (board[i, j] == look)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                        }
+                        if (board[i, j] == 'x')
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                        }
+                        Console.Write($"[{board[i, j]}]");
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
-                    if (board[i, j] == 'x')
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                    }
-
-                    Console.Write($"[{board[i, j]}]");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
             }
         }
 
@@ -50,8 +52,8 @@ namespace ChessFigureProblem
             switch (look)
             {
                 case '\u2659': // Pawn
-                    board[posX, posY] = look;
                     SetPawnFightPos(ref posX,ref posY, look);
+                    board[posX, posY] = look;
                     break;
                 case '\u2658': // Knight
                     board[posX, posY] = look;
@@ -75,6 +77,17 @@ namespace ChessFigureProblem
                     break;
                 default:
                     break;
+            }
+        }
+
+        public void ClearMap()
+        {
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    board[i, j] = '\0';
+                }
             }
         }
 
@@ -170,7 +183,7 @@ namespace ChessFigureProblem
             {
                 board[posX - 1, posY + 2] = fight;
             }
-            // -------------------------------------------------
+            //-------------------------------------
             // Down-Left-Upper-Fight-Pos
             if (posX + 1 < size && posY - 2 >= 0)
             {
@@ -208,7 +221,7 @@ namespace ChessFigureProblem
                 {
                     board[posX + i, posY + i] = fight;
                 }
-
+                //-------------------------------------
                 // Right-Upper
                 if (posX - i >= 0 && posY + i < size)
                 {
@@ -237,7 +250,7 @@ namespace ChessFigureProblem
                 {
                     board[posX, posY + i] = fight;
                 }
-
+                //-------------------------------------
                 // Upper-Vertical
                 if (posX - i >= 0)
                 {
@@ -276,7 +289,7 @@ namespace ChessFigureProblem
                 {
                     board[posX + i, posY - i] = fight;
                 }
-
+                //-------------------------------------
                 // LeftSide-Horizontal
                 if (posY - i >= 0)
                 {
@@ -287,7 +300,7 @@ namespace ChessFigureProblem
                 {
                     board[posX, posY + i] = fight;
                 }
-
+                //-------------------------------------
                 // Upper-Vertical
                 if (posX - i >= 0)
                 {
@@ -318,7 +331,7 @@ namespace ChessFigureProblem
             {
                 board[posX - 1, posY + 1] = fight;
             }
-
+            //-------------------------------------
             // Left-Horizontal
             if (posY - 1 >= 0)
             {
@@ -329,7 +342,7 @@ namespace ChessFigureProblem
             {
                 board[posX, posY + 1] = fight;
             }
-
+            //-------------------------------------
             // Down-Left-Diagonal
             if (posX + 1 < size && posY - 1 >= 0)
             {
@@ -351,6 +364,31 @@ namespace ChessFigureProblem
         public bool IsFreeSpace(byte posX, byte posY, char look)
         {
             if (board[posX, posY] != look && board[posX, posY] != fight)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsMapEmpty()
+        {
+            int countEmpty = 0;
+
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (board[i,j] == '\0')
+                    {
+                        countEmpty++;
+                    }
+                }
+            }
+
+            if (countEmpty == size * size)
             {
                 return true;
             }

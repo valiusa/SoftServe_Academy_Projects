@@ -6,6 +6,7 @@
 
         void ShowMap(char look);
         void SetOnMap(byte posX, byte posY, char look);
+        void ClearMap();
 
         void SetPawnFightPos(ref byte posX,ref byte posY, char look);
         void SetKnightFightPos(byte posX, byte posY);
@@ -15,5 +16,6 @@
         void SetKingFightPos(byte posX, byte posY);
 
         bool IsFreeSpace(byte posX, byte posY, char look);
+        bool IsMapEmpty();
     }
 }

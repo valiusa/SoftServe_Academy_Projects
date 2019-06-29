@@ -22,41 +22,80 @@ namespace ChessFigureProblem
 
             Map map = new Map(size);
 
-            StartSetting(map, p, figObj);
+            SettingTheBoard(map, p, figObj);
 
             map.ShowMap(figObj.GetLook);
         }
 
-        private static void StartSetting(Map map, Point p, Figure figObj)
+        private static void SettingTheBoard(Map map, Point p, Figure figObj)
         {
             Random rnd = new Random();
 
-            const int maxUnscSize = 80 * 3;
+            int solNumb = 1;
+
             byte size = map.GetSize;
             byte countFigures = 0;
             byte countUnsuccessful = 0;
 
             while (countFigures < size)
             {
+            Again:
                 p.SetX = (byte)rnd.Next(0, size);
                 p.SetY = (byte)rnd.Next(0, size);
 
-                if (map.IsFreeSpace(p.GetX, p.GetY, figObj.GetLook))
+                if (figObj.GetLook == '\u2655' || figObj.GetLook == '\u2654')
                 {
-                    map.SetOnMap(p.GetX, p.GetY, figObj.GetLook);
-                    countFigures++;
+                    if (map.IsFreeSpace(p.GetX, p.GetY, figObj.GetLook))
+                    {
+                        if (figObj.GetLook == '\u2655' && (map.GetSize == 2 || map.GetSize == 3)) // If Queen
+                        {
+                            Console.WriteLine(" There is no solution for the current map size.");
+                            break;
+                        }
+                        else if (figObj.GetLook == '\u2654' && map.GetSize == 2)
+                        {
+                            Console.WriteLine(" There is no solution for the current map size.");
+                            break;
+                        }
+                        else
+                        {
+                            map.SetOnMap(p.GetX, p.GetY, figObj.GetLook);
+                            countFigures++;
+                        }
+                    }
+                    else
+                    {
+                        countUnsuccessful++;
+
+                        if (countUnsuccessful == size)
+                        {
+                            map.ClearMap();
+                            countFigures = 0;
+                            solNumb++;
+
+                            goto Again; // goto Line 42
+                        }
+                    }
                 }
                 else
                 {
-                    countUnsuccessful++;
-                    if (countUnsuccessful == maxUnscSize)
+                    if (map.IsFreeSpace(p.GetX, p.GetY, figObj.GetLook))
                     {
-                        Console.WriteLine();
-                        Console.WriteLine(" No Solution Found!");
-                        Console.WriteLine(" Try Again.");
-                        break;
+                        map.SetOnMap(p.GetX, p.GetY, figObj.GetLook);
+                        countFigures++;
                     }
                 }
+            }
+
+            PrintNumberOfSolForQAndK(figObj.GetLook, solNumb, map); // Prints how many solutions were tryed for The Queen and for the King in 3x3 array
+        }
+
+        private static void PrintNumberOfSolForQAndK(char look, int solNumb, Map map)
+        {
+            if ((look == '\u2655' || look == '\u2654') && !map.IsMapEmpty())
+            {
+                Console.WriteLine();
+                Console.WriteLine($" Solution(s): {solNumb}");
             }
         }
 
