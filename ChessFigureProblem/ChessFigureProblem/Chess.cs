@@ -11,91 +11,98 @@ namespace ChessFigureProblem
 
             ShowPicks();
 
-            Console.Write(" Pick Figure: ");
-            char fig = char.Parse(Console.ReadLine());
+            string command = "";
 
-            Point p = new Point();
-            Figure figObj = new Figure(fig);
+            while (command != "stop")
+            {
+                Console.Write(" Pick Figure: ");
+                char fig = char.Parse(Console.ReadLine());
 
-            Console.Write(" Map Size: ");
-            byte size = byte.Parse(Console.ReadLine());
+                Point p = new Point();
+                Figure figure = new Figure(fig);
 
-            Map map = new Map(size);
+                try
+                {
+                    Console.Write(" Map Size: ");
+                    byte size = byte.Parse(Console.ReadLine());
 
-            SettingTheBoard(map, p, figObj);
+                    Map map = new Map(size);
 
-            map.ShowMap(figObj.GetLook);
+                    SettingTheBoard(map, p, figure);
+
+                    map.ShowMap(figure.GetLook);
+
+                    command = Console.ReadLine();
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(" The size is too big!\n Pick size from 0 to 255!");
+                    Console.WriteLine();
+                }
+            }
         }
 
-        private static void SettingTheBoard(Map map, Point p, Figure figObj)
+        private static void SettingTheBoard(Map _map, Point _point, Figure _figure)
+        {
+            int solNum = 1;
+
+            GetSolution(_map, _point, _figure, ref solNum);
+
+            PrintNumberOfSolForQAndK(_figure.GetLook, solNum, _map); // Prints how many solutions were tryed for The Queen and for the King in 3x3 array
+        }
+
+        private static void GetSolution(Map _map, Point _point, Figure _figure, ref int _solNum)
         {
             Random rnd = new Random();
 
-            int solNumb = 1;
-
-            byte size = map.GetSize;
+            byte size = _map.GetSize;
             byte countFigures = 0;
             byte countUnsuccessful = 0;
 
-            while (countFigures < size)
+            while (countFigures != size)
             {
-            Again:
-                p.SetX = (byte)rnd.Next(0, size);
-                p.SetY = (byte)rnd.Next(0, size);
+                _point.SetX = (byte)rnd.Next(0, size);
+                _point.SetY = (byte)rnd.Next(0, size);
 
-                if (figObj.GetLook == '\u2655' || figObj.GetLook == '\u2654')
+                if (_map.IsFreeSpace(_point.GetX, _point.GetY, _figure.GetLook))
                 {
-                    if (map.IsFreeSpace(p.GetX, p.GetY, figObj.GetLook))
+                    if (_figure.GetLook == '\u2655' && (size == 2 || size == 3)) // If Queen
                     {
-                        if (figObj.GetLook == '\u2655' && (map.GetSize == 2 || map.GetSize == 3)) // If Queen
-                        {
-                            Console.WriteLine(" There is no solution for the current map size.");
-                            break;
-                        }
-                        else if (figObj.GetLook == '\u2654' && map.GetSize == 2)
-                        {
-                            Console.WriteLine(" There is no solution for the current map size.");
-                            break;
-                        }
-                        else
-                        {
-                            map.SetOnMap(p.GetX, p.GetY, figObj.GetLook);
-                            countFigures++;
-                        }
+                        Console.WriteLine(" There is no solution for the current map size.");
+                        break;
+                    }
+                    else if (_figure.GetLook == '\u2654' && size == 2)
+                    {
+                        Console.WriteLine(" There is no solution for the current map size.");
+                        break;
                     }
                     else
                     {
-                        countUnsuccessful++;
-
-                        if (countUnsuccessful == size)
-                        {
-                            map.ClearMap();
-                            countFigures = 0;
-                            solNumb++;
-
-                            goto Again; // goto Line 42
-                        }
+                        countFigures++;
+                        _map.SetOnMap(_point.GetX, _point.GetY, _figure.GetLook, ref countFigures);                        
                     }
                 }
                 else
                 {
-                    if (map.IsFreeSpace(p.GetX, p.GetY, figObj.GetLook))
+                    countUnsuccessful++;
+
+                    if (countUnsuccessful == size)
                     {
-                        map.SetOnMap(p.GetX, p.GetY, figObj.GetLook);
-                        countFigures++;
+                        _map.ClearMap();
+                        countFigures = 0;
+                        _solNum++;
                     }
                 }
             }
-
-            PrintNumberOfSolForQAndK(figObj.GetLook, solNumb, map); // Prints how many solutions were tryed for The Queen and for the King in 3x3 array
         }
 
-        private static void PrintNumberOfSolForQAndK(char look, int solNumb, Map map)
+        private static void PrintNumberOfSolForQAndK(char _look, int _solNum, Map _map)
         {
-            if ((look == '\u2655' || look == '\u2654') && !map.IsMapEmpty())
+            if ((_look == '\u2655' || (_look == '\u2654' && _map.GetSize == 3)) && !_map.IsMapEmpty())
             {
                 Console.WriteLine();
-                Console.WriteLine($" Solution(s): {solNumb}");
+                Console.WriteLine($" Solution(s): {_solNum}");
             }
         }
 

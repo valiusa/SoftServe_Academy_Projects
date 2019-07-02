@@ -43,6 +43,7 @@
                     look = '\u2654';
                     break;
                 default:
+                    look = _look;
                     break;
             }
         }
