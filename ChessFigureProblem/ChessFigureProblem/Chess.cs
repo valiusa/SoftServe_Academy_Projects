@@ -18,7 +18,7 @@ namespace ChessFigureProblem
                 Console.Write(" Pick Figure: ");
                 char fig = char.Parse(Console.ReadLine());
 
-                Point p = new Point();
+                Point point = new Point();
                 Figure figure = new Figure(fig);
 
                 try
@@ -28,7 +28,7 @@ namespace ChessFigureProblem
 
                     Map map = new Map(size);
 
-                    SettingTheBoard(map, p, figure);
+                    SettingTheBoard(map, point, figure);
 
                     map.ShowMap(figure.GetLook);
 
@@ -45,7 +45,7 @@ namespace ChessFigureProblem
 
         private static void SettingTheBoard(Map _map, Point _point, Figure _figure)
         {
-            int solNum = 1;
+            int solNum = 0;
 
             GetSolution(_map, _point, _figure, ref solNum);
 
@@ -72,7 +72,7 @@ namespace ChessFigureProblem
                         Console.WriteLine(" There is no solution for the current map size.");
                         break;
                     }
-                    else if (_figure.GetLook == '\u2654' && size == 2)
+                    else if (_figure.GetLook == '\u2654' && size == 2) // If King
                     {
                         Console.WriteLine(" There is no solution for the current map size.");
                         break;
@@ -80,14 +80,14 @@ namespace ChessFigureProblem
                     else
                     {
                         countFigures++;
-                        _map.SetOnMap(_point.GetX, _point.GetY, _figure.GetLook, ref countFigures);                        
+                        _map.SetOnMap(_point.GetX, _point.GetY, _figure.GetLook, ref countFigures);
                     }
                 }
                 else
                 {
                     countUnsuccessful++;
 
-                    if (countUnsuccessful == size)
+                    if (countUnsuccessful == size / 2)
                     {
                         _map.ClearMap();
                         countFigures = 0;

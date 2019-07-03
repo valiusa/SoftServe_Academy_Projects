@@ -25,25 +25,22 @@
             switch (_look)
             {
                 case 'p':
-                    look = '\u2659';
+                    look = '\u2659'; // Pawn
                     break;
                 case 'k':
-                    look = '\u2658';
+                    look = '\u2658'; // Knight
                     break;
                 case 'b':
-                    look = '\u2657';
+                    look = '\u2657'; // Bishop
                     break;
                 case 'r':
-                    look = '\u2656';
+                    look = '\u2656'; // Rook
                     break;
                 case 'Q':
-                    look = '\u2655';
+                    look = '\u2655'; // Queen
                     break;
                 case 'K':
-                    look = '\u2654';
-                    break;
-                default:
-                    look = _look;
+                    look = '\u2654'; // King
                     break;
             }
         }
