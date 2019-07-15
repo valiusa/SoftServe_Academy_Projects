@@ -23,14 +23,15 @@ namespace ChessFigureProblem
                 Console.Write(" Pick Figure: ");
                 char fig = char.Parse(Console.ReadLine());
 
-                Point point = new Point();
-                Figure figure = new Figure(fig);
+                Point point = new Point();                
 
                 byte size = 0;
                 byte spaces = 0;
 
                 if (IsUserDefindFig(fig))
                 {
+                    CustomFigure customFig = new CustomFigure(fig);
+
                     Console.Write(" Choose figure fighting positons: ");
                     string moves = Console.ReadLine();
 
@@ -44,8 +45,8 @@ namespace ChessFigureProblem
 
                         Map map = new Map(size);
 
-                        SettingTheBoardForUser(map, point, figure, moves, spaces);
-                        map.ShowMap(figure.GetLook);
+                        SettingTheBoardForUser(map, point, customFig, moves, spaces);
+                        map.ShowMap(customFig.GetLook);
                     }
                     catch (OverflowException)
                     {
@@ -56,6 +57,8 @@ namespace ChessFigureProblem
                 }
                 else
                 {
+                    ChessFigure figure = new ChessFigure(fig);
+
                     try
                     {
                         Console.Write(" Map Size: ");
@@ -78,7 +81,7 @@ namespace ChessFigureProblem
             }
         }
 
-        private static void SettingTheBoardForUser(Map map, Point point, Figure figure, string moves, byte spaces)
+        private static void SettingTheBoardForUser(Map map, Point point, CustomFigure customFig, string moves, byte spaces)
         {
             Random rnd = new Random();
 
@@ -91,10 +94,10 @@ namespace ChessFigureProblem
                 point.SetX = (byte)rnd.Next(0, size);
                 point.SetY = (byte)rnd.Next(0, size);
 
-                if (map.IsFreeSpace(point.GetX, point.GetY, figure.GetLook))
+                if (map.IsFreeSpace(point.GetX, point.GetY, customFig))
                 {
                     countFigures++;
-                    map.SetUserOnMap(point.GetX, point.GetY, figure.GetLook, moves, spaces, ref countFigures);                    
+                    map.SetUserOnMap(point, customFig, moves, spaces, ref countFigures);                    
                 }
                 else
                 {
@@ -122,7 +125,7 @@ namespace ChessFigureProblem
             }
         }
 
-        private static void SettingTheBoard(Map _map, Point _point, Figure _figure)
+        private static void SettingTheBoard(Map _map, Point _point, ChessFigure _figure)
         {
             int solNum = 0;
 
@@ -131,7 +134,7 @@ namespace ChessFigureProblem
             PrintNumberOfSolForQAndK(_figure.GetLook, solNum, _map); // Prints how many solutions were tryed for The Queen and for the King in 3x3 array
         }
 
-        private static void GetSolution(Map _map, Point _point, Figure _figure, ref int _solNum)
+        private static void GetSolution(Map _map, Point _point, ChessFigure _figure, ref int _solNum)
         {
             Random rnd = new Random();
 
@@ -144,7 +147,7 @@ namespace ChessFigureProblem
                 _point.SetX = (byte)rnd.Next(0, size);
                 _point.SetY = (byte)rnd.Next(0, size);
 
-                if (_map.IsFreeSpace(_point.GetX, _point.GetY, _figure.GetLook))
+                if (_map.IsFreeSpace(_point.GetX, _point.GetY, _figure))
                 {
                     if (_figure.GetLook == '\u2655' && (size == 2 || size == 3)) // If Queen
                     {
@@ -159,7 +162,7 @@ namespace ChessFigureProblem
                     else
                     {
                         countFigures++;
-                        _map.SetOnMap(_point.GetX, _point.GetY, _figure.GetLook, ref countFigures);
+                        _map.SetOnMap(_point, _figure, ref countFigures);
                     }
                 }
                 else

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chess.cs" />
+    <Compile Include="CustomFigure.cs" />
     <Compile Include="Figure.cs" />
     <Compile Include="IFigure.cs" />
     <Compile Include="IMap.cs" />
