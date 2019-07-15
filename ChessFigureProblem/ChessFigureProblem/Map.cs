@@ -47,6 +47,15 @@ namespace ChessFigureProblem
             }
         }
 
+        public void SetUserOnMap(byte posX, byte posY, char look, string moves, byte spaces, ref byte countFigures)
+        {
+            byte _posX = posX;
+            byte _posY = posY;
+
+            SetUserFightPos(ref _posX, ref _posY, moves, spaces, look, ref countFigures);
+            board[posX, posY] = look;
+        }
+
         public void SetOnMap(byte posX, byte posY, char look, ref byte countFigures)
         {
             byte _posX = posX;
@@ -382,6 +391,222 @@ namespace ChessFigureProblem
             if (posX + 1 < size && posY + 1 < size)
             {
                 board[posX + 1, posY + 1] = fight;
+            }
+        }
+
+        public void SetUserFightPos(ref byte posX, ref byte posY, string moves, byte spaces, char look, ref byte count)
+        {
+            Random rnd = new Random();
+            string[] _moves = moves.Split(' ');
+
+            for (int i = 0; i < _moves.Length; i++)
+            {
+                switch (_moves[i])
+                {
+                    // Diagonals
+                    case "lud":
+                        for (int j = 1; j <= size; j++)
+                        {
+                            if (posX - j >= 0 && posY - j >= 0)
+                            {
+                                if (board[posX - j, posY - j] != look)
+                                {
+                                    board[posX - j, posY - j] = fight;
+                                }
+                                else
+                                {
+                                    count--;
+                                    if (posX - j >= 0 && posY + j < size)
+                                    {
+                                        board[posX - j, posY + j] = '\0';
+                                    }
+
+                                    posX = (byte)rnd.Next(0, size);
+                                    posY = (byte)rnd.Next(0, size);
+
+                                    SetUserFightPos(ref posX, ref posY, moves, spaces, look, ref count);
+                                }
+                            }
+                        }
+                        break;
+                    case "rud":
+                        for (int j = 1; j <= size; j++)
+                        {
+                            if (posX - j >= 0 && posY + j < size)
+                            {
+                                if (board[posX - j, posY + j] != look)
+                                {
+                                    board[posX - j, posY + j] = fight;
+                                }
+                                else
+                                {
+                                    count--;
+                                    if (posX - j >= 0 && posY - j >= 0)
+                                    {
+                                        board[posX - j, posY - j] = '\0';
+                                    }
+
+                                    posX = (byte)rnd.Next(0, size);
+                                    posY = (byte)rnd.Next(0, size);
+
+                                    SetUserFightPos(ref posX, ref posY, moves, spaces, look, ref count);
+                                }
+                            }
+                        }
+                        break;
+                    case "lld":
+                        for (int j = 1; j <= size; j++)
+                        {
+                            if (posX + j < size && posY - j >= 0)
+                            {
+                                if (board[posX + j, posY - j] != look)
+                                {
+                                    board[posX + j, posY - j] = fight;
+                                }
+                                else
+                                {
+                                    count--;
+                                    if (posX + j < size && posY + j < size)
+                                    {
+                                        board[posX + j, posY + j] = '\0';
+                                    }
+
+                                    posX = (byte)rnd.Next(0, size);
+                                    posY = (byte)rnd.Next(0, size);
+
+                                    SetUserFightPos(ref posX, ref posY, moves, spaces, look, ref count);
+                                }
+                            }
+                        }
+                        break;
+                    case "rld":
+                        for (int j = 1; j <= size; j++)
+                        {
+                            if (posX + j < size && posY + j < size)
+                            {
+                                if (board[posX + j, posY + j] != look)
+                                {
+                                    board[posX + j, posY + j] = fight;
+                                }
+                                else
+                                {
+                                    count--;
+                                    if (posX + j < size && posY - j >= 0)
+                                    {
+                                        board[posX + j, posY - j] = '\0';
+                                    }
+
+                                    posX = (byte)rnd.Next(0, size);
+                                    posY = (byte)rnd.Next(0, size);
+
+                                    SetUserFightPos(ref posX, ref posY, moves, spaces, look, ref count);
+                                }
+                            }
+                        }
+                        break;
+                    // Horizontals
+                    case "lh":
+                        for (int j = 1; j <= size; j++)
+                        {
+                            if (posY - j >= 0)
+                            {
+                                if (board[posX, posY - j] != look)
+                                {
+                                    board[posX, posY - j] = fight;
+                                }
+                                else
+                                {
+                                    count--;
+                                    if (posY + j < size)
+                                    {
+                                        board[posX, posY + j] = '\0';
+                                    }
+
+                                    posX = (byte)rnd.Next(0, size);
+                                    posY = (byte)rnd.Next(0, size);
+
+                                    SetUserFightPos(ref posX, ref posY, moves, spaces, look, ref count);
+                                }
+                            }
+                        }
+                        break;
+                    case "rh":
+                        for (int j = 1; j <= size; j++)
+                        {
+                            if (posY + j < size)
+                            {
+                                if (board[posX, posY + j] != look)
+                                {
+                                    board[posX, posY + j] = fight;
+                                }
+                                else
+                                {
+                                    count--;
+                                    if (posY - j >= 0)
+                                    {
+                                        board[posX, posY - j] = '\0';
+                                    }
+
+                                    posX = (byte)rnd.Next(0, size);
+                                    posY = (byte)rnd.Next(0, size);
+
+                                    SetUserFightPos(ref posX, ref posY, moves, spaces, look, ref count);
+                                }
+                            }
+                        }
+                        break;
+                    // Vertical
+                    case "uv":
+                        for (int j = 1; j <= size; j++)
+                        {
+                            if (posX - j >= 0)
+                            {
+                                if (board[posX - j, posY] != look)
+                                {
+                                    board[posX - j, posY] = fight;
+                                }
+                                else
+                                {
+                                    count--;
+                                    if (posX + j < size)
+                                    {
+                                        board[posX + j, posY] = '\0';
+                                    }
+
+                                    posX = (byte)rnd.Next(0, size);
+                                    posY = (byte)rnd.Next(0, size);
+
+                                    SetUserFightPos(ref posX, ref posY, moves, spaces, look, ref count);
+                                }
+                            }
+                        }
+                        break;
+                    case "lv":
+                        for (int j = 1; j <= size; j++)
+                        {
+                            if (posX + j < size)
+                            {
+                                if (board[posX + j, posY] != look)
+                                {
+                                    board[posX + j, posY] = fight;
+                                }
+                                else
+                                {
+                                    count--;
+                                    if (posX - j >= 0)
+                                    {
+                                        board[posX - j, posY] = '\0';
+                                    }
+
+                                    posX = (byte)rnd.Next(0, size);
+                                    posY = (byte)rnd.Next(0, size);
+
+                                    SetUserFightPos(ref posX, ref posY, moves, spaces, look, ref count);
+                                }
+                            }
+                        }
+                        break;
+                }
             }
         }
         // --------------------------------------------------------

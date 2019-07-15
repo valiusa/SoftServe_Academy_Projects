@@ -7,6 +7,11 @@ namespace ChessFigureProblem
     {
         static void Main(string[] args)
         {
+            StartProgram();
+        }
+
+        private static void StartProgram()
+        {
             Console.OutputEncoding = Encoding.UTF8;
 
             ShowPicks();
@@ -21,25 +26,99 @@ namespace ChessFigureProblem
                 Point point = new Point();
                 Figure figure = new Figure(fig);
 
-                try
+                byte size = 0;
+                byte spaces = 0;
+
+                if (IsUserDefindFig(fig))
                 {
-                    Console.Write(" Map Size: ");
-                    byte size = byte.Parse(Console.ReadLine());
+                    Console.Write(" Choose figure fighting positons: ");
+                    string moves = Console.ReadLine();
 
-                    Map map = new Map(size);
+                    Console.Write(" Choose figure fighting spaces: ");
+                    spaces = byte.Parse(Console.ReadLine());
 
-                    SettingTheBoard(map, point, figure);
+                    try
+                    {
+                        Console.Write(" Map Size: ");
+                        size = byte.Parse(Console.ReadLine());                        
 
-                    map.ShowMap(figure.GetLook);
+                        Map map = new Map(size);
 
-                    command = Console.ReadLine();
+                        SettingTheBoardForUser(map, point, figure, moves, spaces);
+                        map.ShowMap(figure.GetLook);
+                    }
+                    catch (OverflowException)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(" The size is too big or too small!\n Pick size from 0 to 255!");
+                        Console.WriteLine();
+                    }
                 }
-                catch (OverflowException)
+                else
                 {
-                    Console.WriteLine();
-                    Console.WriteLine(" The size is too big!\n Pick size from 0 to 255!");
-                    Console.WriteLine();
+                    try
+                    {
+                        Console.Write(" Map Size: ");
+                        size = byte.Parse(Console.ReadLine());
+
+                        Map map = new Map(size);
+
+                        SettingTheBoard(map, point, figure);
+                        map.ShowMap(figure.GetLook);
+                    }
+                    catch (OverflowException)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(" The size is too big or too small!\n Pick size from 0 to 255!");
+                        Console.WriteLine();
+                    }
                 }
+
+                command = Console.ReadLine();                
+            }
+        }
+
+        private static void SettingTheBoardForUser(Map map, Point point, Figure figure, string moves, byte spaces)
+        {
+            Random rnd = new Random();
+
+            byte size = map.GetSize;
+            byte countFigures = 0;
+            byte countUnsuccessful = 0;
+
+            while (countFigures != size)
+            {
+                point.SetX = (byte)rnd.Next(0, size);
+                point.SetY = (byte)rnd.Next(0, size);
+
+                if (map.IsFreeSpace(point.GetX, point.GetY, figure.GetLook))
+                {
+                    countFigures++;
+                    map.SetUserOnMap(point.GetX, point.GetY, figure.GetLook, moves, spaces, ref countFigures);                    
+                }
+                else
+                {
+                    countUnsuccessful++;
+
+                    if (countUnsuccessful == size * size)
+                    {
+                        map.ClearMap();
+                        Console.WriteLine(" There may be no solution for the current figure!\n Please try again!");
+                        break;
+                    }
+                }
+            }
+        }
+
+        private static bool IsUserDefindFig(char look)
+        {
+            if (look != 'p' && look != 'k' && look != 'b' && look != 'r' && look != 'Q' && look != 'K')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -108,9 +187,18 @@ namespace ChessFigureProblem
 
         private static void ShowPicks()
         {
-            Console.WriteLine(" -----------------------------------------------------");
-            Console.WriteLine("| p => \u2659 | k => \u2658 | b => \u2657 | r => \u2656 | Q => \u2655 | K => \u2654 |");
-            Console.WriteLine(" -----------------------------------------------------");
+            Console.WriteLine(" -------------------------------------------------------------------------------------------------");
+            Console.WriteLine("|               p => \u2659 | k => \u2658 | b => \u2657 | r => \u2656 | Q => \u2655 | K => \u2654 | User => User                |");
+            Console.WriteLine("|-------------------------------------------------------------------------------------------------|");
+            Console.WriteLine("| Left Upper Diagonal => lud                                                                      |");
+            Console.WriteLine("| Left Lower Diagonal => lld                                                                      |");
+            Console.WriteLine("| Right Upper Diagonal => rud                                                                     |");
+            Console.WriteLine("| Right Lower Diagonal => rld                                                                     |");
+            Console.WriteLine("| Left Horizontal => lh                                                                           |");
+            Console.WriteLine("| Right Horizontal => rh                                                                          |");
+            Console.WriteLine("| Upper Vertical => uv                                                                            |");
+            Console.WriteLine("| Lower Vertical => lv                                                                            |");
+            Console.WriteLine(" -------------------------------------------------------------------------------------------------");
         }
     }
 }

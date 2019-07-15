@@ -42,6 +42,9 @@
                 case 'K':
                     look = '\u2654'; // King
                     break;
+                default:
+                    look = _look; // User
+                    break;
             }
         }
     }
