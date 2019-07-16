@@ -14,34 +14,39 @@ namespace ChessFigureProblem
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            ShowPicks();
+            Point point = new Point();
+
+            byte size = 0;
+            byte spaces = 0;
+
+            char fig;
 
             string command = "";
+            string moves = "";
+
+            ShowPicks();            
 
             while (command != "stop")
             {
                 Console.Write(" Pick Figure: ");
-                char fig = char.Parse(Console.ReadLine());
-
-                Point point = new Point();                
-
-                byte size = 0;
-                byte spaces = 0;
+                fig = char.Parse(Console.ReadLine());                
 
                 if (IsUserDefindFig(fig))
                 {
                     CustomFigure customFig = new CustomFigure(fig);
 
                     Console.Write(" Choose figure fighting positons: ");
-                    string moves = Console.ReadLine();
+                    moves = Console.ReadLine();
 
                     Console.Write(" Choose figure fighting spaces: ");
-                    spaces = byte.Parse(Console.ReadLine());
+                    spaces = byte.Parse(Console.ReadLine());                    
 
                     try
                     {
                         Console.Write(" Map Size: ");
-                        size = byte.Parse(Console.ReadLine());                        
+                        size = byte.Parse(Console.ReadLine());
+
+                        if (spaces > size) spaces = size;
 
                         Map map = new Map(size);
 
@@ -50,9 +55,7 @@ namespace ChessFigureProblem
                     }
                     catch (OverflowException)
                     {
-                        Console.WriteLine();
-                        Console.WriteLine(" The size is too big or too small!\n Pick size from 0 to 255!");
-                        Console.WriteLine();
+                        OverflowMessage();                        
                     }
                 }
                 else
@@ -71,14 +74,19 @@ namespace ChessFigureProblem
                     }
                     catch (OverflowException)
                     {
-                        Console.WriteLine();
-                        Console.WriteLine(" The size is too big or too small!\n Pick size from 0 to 255!");
-                        Console.WriteLine();
+                        OverflowMessage();
                     }
                 }
 
                 command = Console.ReadLine();                
             }
+        }
+
+        private static void OverflowMessage()
+        {
+            Console.WriteLine();
+            Console.WriteLine(" The size is too big or too small!\n Pick size from 0 to 255!");
+            Console.WriteLine();
         }
 
         private static void SettingTheBoardForUser(Map map, Point point, CustomFigure customFig, string moves, byte spaces)
@@ -116,13 +124,9 @@ namespace ChessFigureProblem
         private static bool IsUserDefindFig(char look)
         {
             if (look != 'p' && look != 'k' && look != 'b' && look != 'r' && look != 'Q' && look != 'K')
-            {
                 return true;
-            }
             else
-            {
                 return false;
-            }
         }
 
         private static void SettingTheBoard(Map _map, Point _point, ChessFigure _figure)

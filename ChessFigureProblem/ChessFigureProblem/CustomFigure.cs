@@ -27,27 +27,27 @@ namespace ChessFigureProblem
                         SetLeftUpperDiagonal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);
                         break;
                     case "rud":
-                        SetRightUpperDiagonal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);                        
+                        SetRightUpperDiagonal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);
                         break;
                     case "lld":
-                        SetLeftLowerDiagonal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);                        
+                        SetLeftLowerDiagonal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);
                         break;
                     case "rld":
-                        SetRightLowerDiagonal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);                        
+                        SetRightLowerDiagonal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);
                         break;
                     // Horizontals
                     case "lh":
-                        SetLeftHorizontal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);                        
+                        SetLeftHorizontal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);
                         break;
                     case "rh":
-                        SetRightHorizontal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);                        
+                        SetRightHorizontal(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);
                         break;
                     // Verticals
                     case "uv":
-                        SetUpperVertical(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);                        
+                        SetUpperVertical(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);
                         break;
                     case "lv":
-                        SetLowerVertical(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);                        
+                        SetLowerVertical(rnd, ref posX, ref posY, board, size, spaces, ref count, moves);
                         break;
                 }
             }
@@ -65,11 +65,8 @@ namespace ChessFigureProblem
                     }
                     else
                     {
+                        board[posX + (j - 1), posY] = '\0';
                         count--;
-                        if (posX - j >= 0)
-                        {
-                            board[posX - j, posY] = '\0';
-                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -92,11 +89,8 @@ namespace ChessFigureProblem
                     }
                     else
                     {
+                        board[posX - (j - 1), posY] = '\0';
                         count--;
-                        if (posX + j < size)
-                        {
-                            board[posX + j, posY] = '\0';
-                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -119,11 +113,8 @@ namespace ChessFigureProblem
                     }
                     else
                     {
+                        board[posX, posY + (j - 1)] = '\0';
                         count--;
-                        if (posY - j >= 0)
-                        {
-                            board[posX, posY - j] = '\0';
-                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -146,11 +137,8 @@ namespace ChessFigureProblem
                     }
                     else
                     {
+                        board[posX, posY - (j - 1)] = '\0';
                         count--;
-                        if (posY + j < size)
-                        {
-                            board[posX, posY + j] = '\0';
-                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -173,11 +161,8 @@ namespace ChessFigureProblem
                     }
                     else
                     {
+                        board[posX + (j - 1), posY + (j - 1)] = '\0';
                         count--;
-                        if (posX + j < size && posY - j >= 0)
-                        {
-                            board[posX + j, posY - j] = '\0';
-                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -200,11 +185,8 @@ namespace ChessFigureProblem
                     }
                     else
                     {
+                        board[posX + (j - 1), posY - (j - 1)] = '\0';
                         count--;
-                        if (posX + j < size && posY + j < size)
-                        {
-                            board[posX + j, posY + j] = '\0';
-                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -227,11 +209,8 @@ namespace ChessFigureProblem
                     }
                     else
                     {
+                        board[posX - (j - 1), posY + (j - 1)] = '\0';
                         count--;
-                        if (posX - j >= 0 && posY - j >= 0)
-                        {
-                            board[posX - j, posY - j] = '\0';
-                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -254,11 +233,8 @@ namespace ChessFigureProblem
                     }
                     else
                     {
+                        board[posX - (j - 1), posY - (j - 1)] = '\0';
                         count--;
-                        if (posX - j >= 0 && posY + j < size)
-                        {
-                            board[posX - j, posY + j] = '\0';
-                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);

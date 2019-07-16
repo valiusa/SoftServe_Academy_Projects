@@ -103,13 +103,9 @@ namespace ChessFigureProblem
         public bool IsFreeSpace(byte posX, byte posY, ChessFigure figure)
         {
             if (board[posX, posY] != figure.GetLook && board[posX, posY] != figure.GetFight)
-            {
                 return true;
-            }
             else
-            {
                 return false;
-            }
         }
 
         public bool IsMapEmpty()
@@ -128,13 +124,9 @@ namespace ChessFigureProblem
             }
 
             if (countEmpty == size * size)
-            {
                 return true;
-            }
             else
-            {
                 return false;
-            }
         }
     }
 }
