@@ -4,7 +4,7 @@ namespace ChessFigureProblem
 {
     class Map : IMap
     {
-        private readonly byte size;        
+        private readonly byte size;
         private char[,] board;
 
         public byte GetSize
@@ -51,8 +51,8 @@ namespace ChessFigureProblem
             byte _posX = point.GetX;
             byte _posY = point.GetY;
 
-            customFig.SetUserFightPos(ref _posX, ref _posY, moves, spaces, ref countFigures, board, size);
             board[_posX, _posY] = customFig.GetLook;
+            customFig.SetUserFightPos(ref _posX, ref _posY, moves, spaces, ref countFigures, board, size);            
         }
 
         public void SetOnMap(Point point, ChessFigure figure, ref byte countFigures)
@@ -99,7 +99,7 @@ namespace ChessFigureProblem
                 }
             }
         }
-         
+
         public bool IsFreeSpace(byte posX, byte posY, ChessFigure figure)
         {
             if (board[posX, posY] != figure.GetLook && board[posX, posY] != figure.GetFight)

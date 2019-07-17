@@ -55,6 +55,8 @@ namespace ChessFigureProblem
 
         private void SetLowerVertical(Random rnd, ref byte posX, ref byte posY, char[,] board, byte size, byte spaces, ref byte count, string moves)
         {
+            byte countFightPos = 1;
+
             for (int j = 1; j <= spaces; j++)
             {
                 if (posX + j < size)
@@ -62,11 +64,17 @@ namespace ChessFigureProblem
                     if (board[posX + j, posY] != look)
                     {
                         board[posX + j, posY] = fight;
+                        countFightPos++;
                     }
                     else
                     {
-                        board[posX + (j - 1), posY] = '\0';
                         count--;
+                        board[posX, posY] = '\0';
+
+                        for (int i = 1; i <= countFightPos; i++)
+                        {
+                            board[posX + (j - i), posY] = '\0';
+                        }                                              
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -76,9 +84,11 @@ namespace ChessFigureProblem
                 }
             }
         }
-
+        
         private void SetUpperVertical(Random rnd, ref byte posX, ref byte posY, char[,] board, byte size, byte spaces, ref byte count, string moves)
         {
+            byte countFightPos = 1;
+
             for (int j = 1; j <= spaces; j++)
             {
                 if (posX - j >= 0)
@@ -86,11 +96,17 @@ namespace ChessFigureProblem
                     if (board[posX - j, posY] != look)
                     {
                         board[posX - j, posY] = fight;
+                        countFightPos++;
                     }
                     else
                     {
-                        board[posX - (j - 1), posY] = '\0';
                         count--;
+                        board[posX, posY] = '\0';
+
+                        for (int i = 1; i <= countFightPos; i++)
+                        {
+                            board[posX - (j - i), posY] = '\0';
+                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -103,6 +119,8 @@ namespace ChessFigureProblem
 
         private void SetRightHorizontal(Random rnd, ref byte posX, ref byte posY, char[,] board, byte size, byte spaces, ref byte count, string moves)
         {
+            byte countFightPos = 1;
+
             for (int j = 1; j <= spaces; j++)
             {
                 if (posY + j < size)
@@ -110,11 +128,17 @@ namespace ChessFigureProblem
                     if (board[posX, posY + j] != look)
                     {
                         board[posX, posY + j] = fight;
+                        countFightPos++;
                     }
                     else
                     {
-                        board[posX, posY + (j - 1)] = '\0';
                         count--;
+                        board[posX, posY] = '\0';
+
+                        for (int i = 1; i <= countFightPos; i++)
+                        {
+                            board[posX, posY + (j - i)] = '\0';
+                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -127,6 +151,8 @@ namespace ChessFigureProblem
 
         private void SetLeftHorizontal(Random rnd, ref byte posX, ref byte posY, char[,] board, byte size, byte spaces, ref byte count, string moves)
         {
+            byte countFightPos = 1;
+
             for (int j = 1; j <= spaces; j++)
             {
                 if (posY - j >= 0)
@@ -134,11 +160,17 @@ namespace ChessFigureProblem
                     if (board[posX, posY - j] != look)
                     {
                         board[posX, posY - j] = fight;
+                        countFightPos++;
                     }
                     else
                     {
-                        board[posX, posY - (j - 1)] = '\0';
                         count--;
+                        board[posX, posY] = '\0';
+
+                        for (int i = 1; i <= countFightPos; i++)
+                        {
+                            board[posX, posY - (j - i)] = '\0';
+                        }                        
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -151,6 +183,8 @@ namespace ChessFigureProblem
 
         private void SetRightLowerDiagonal(Random rnd, ref byte posX, ref byte posY, char[,] board, byte size, byte spaces, ref byte count, string moves)
         {
+            byte countFightPos = 1;
+
             for (int j = 1; j <= spaces; j++)
             {
                 if (posX + j < size && posY + j < size)
@@ -158,11 +192,17 @@ namespace ChessFigureProblem
                     if (board[posX + j, posY + j] != look)
                     {
                         board[posX + j, posY + j] = fight;
+                        countFightPos++;
                     }
                     else
                     {
-                        board[posX + (j - 1), posY + (j - 1)] = '\0';
                         count--;
+                        board[posX, posY] = '\0';
+
+                        for (int i = 1; i <= countFightPos; i++)
+                        {
+                            board[posX + (j - i), posY + (j - i)] = '\0';
+                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -175,6 +215,8 @@ namespace ChessFigureProblem
 
         private void SetLeftLowerDiagonal(Random rnd, ref byte posX, ref byte posY, char[,] board, byte size, byte spaces, ref byte count, string moves)
         {
+            byte countFightPos = 1;
+
             for (int j = 1; j <= spaces; j++)
             {
                 if (posX + j < size && posY - j >= 0)
@@ -182,11 +224,17 @@ namespace ChessFigureProblem
                     if (board[posX + j, posY - j] != look)
                     {
                         board[posX + j, posY - j] = fight;
+                        countFightPos++;
                     }
                     else
                     {
-                        board[posX + (j - 1), posY - (j - 1)] = '\0';
                         count--;
+                        board[posX, posY] = '\0';
+
+                        for (int i = 1; i <= countFightPos; i++)
+                        {
+                            board[posX + (j - i), posY - (j - i)] = '\0';
+                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -199,6 +247,8 @@ namespace ChessFigureProblem
 
         private void SetRightUpperDiagonal(Random rnd, ref byte posX, ref byte posY, char[,] board, byte size, byte spaces, ref byte count, string moves)
         {
+            byte countFightPos = 1;
+
             for (int j = 1; j <= spaces; j++)
             {
                 if (posX - j >= 0 && posY + j < size)
@@ -206,11 +256,17 @@ namespace ChessFigureProblem
                     if (board[posX - j, posY + j] != look)
                     {
                         board[posX - j, posY + j] = fight;
+                        countFightPos++;
                     }
                     else
                     {
-                        board[posX - (j - 1), posY + (j - 1)] = '\0';
                         count--;
+                        board[posX, posY] = '\0';
+
+                        for (int i = 1; i <= countFightPos; i++)
+                        {
+                            board[posX - (j - i), posY + (j - i)] = '\0';
+                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
@@ -223,6 +279,8 @@ namespace ChessFigureProblem
 
         private void SetLeftUpperDiagonal(Random rnd, ref byte posX, ref byte posY, char[,] board, byte size, byte spaces, ref byte count, string moves)
         {
+            byte countFightPos = 1;
+
             for (int j = 1; j <= spaces; j++)
             {
                 if (posX - j >= 0 && posY - j >= 0)
@@ -230,11 +288,17 @@ namespace ChessFigureProblem
                     if (board[posX - j, posY - j] != look)
                     {
                         board[posX - j, posY - j] = fight;
+                        countFightPos++;
                     }
                     else
                     {
-                        board[posX - (j - 1), posY - (j - 1)] = '\0';
                         count--;
+                        board[posX, posY] = '\0';
+
+                        for (int i = 1; i <= countFightPos; i++)
+                        {
+                            board[posX - (j - i), posY - (j - i)] = '\0';
+                        }
 
                         posX = (byte)rnd.Next(0, size);
                         posY = (byte)rnd.Next(0, size);
